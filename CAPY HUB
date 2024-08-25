@@ -1,0 +1,184 @@
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+
+local Window = OrionLib:MakeWindow({Name = "Capy Hub", HidePremium = false, SaveConfig = true, ConfigFolder = "OrionTest"})
+
+local Tab = Window:MakeTab({
+    Name = "Ngày Và Giờ",
+    Icon = "rbxassetid://4483345998",
+    PremiumOnly = false
+})
+
+local ClockSection = Tab:AddSection({Name = "Ngày Và Giờ Hiện Tại"})
+
+-- Add a label for displaying the clock
+local ClockLabel = ClockSection:AddLabel("Time: Loading...")
+
+-- Function to format the real time
+local function FormatTime()
+    local currentTime = os.date("*t")
+    local hour = currentTime.hour
+    local amPm = "AM"
+
+    if hour >= 12 then
+        amPm = "PM"
+        if hour > 12 then
+            hour = hour - 12
+        end
+    elseif hour == 0 then
+        hour = 12
+    end
+
+    local formattedTime = string.format("%02d:%02d:%02d %s", hour, currentTime.min, currentTime.sec, amPm)
+    local formattedDate = string.format("%02d/%02d/%04d", currentTime.day, currentTime.month, currentTime.year)
+
+    return formattedDate .. " " .. formattedTime
+end
+
+-- Function to update the clock with rainbow effect
+local function UpdateClock()
+    local hue = 0
+
+    while true do
+        local startTime = tick()
+        
+        -- Update the clock label
+        ClockLabel:Set("Ngày Và Giờ: " .. FormatTime())
+        
+        -- Calculate the RGB color based on hue
+        hue = hue + 0.01
+        if hue > 1 then
+            hue = 0
+        end
+
+        local color = Color3.fromHSV(hue, 1, 1)
+        ClockLabel.TextColor3 = color
+        
+        -- Wait for the remaining time until the next second
+        local elapsedTime = tick() - startTime
+        wait(1 - elapsedTime)
+    end
+end
+
+-- Start updating the clock
+spawn(UpdateClock)
+
+
+local Tab = Window:MakeTab({
+	Name = "Universal",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Section = Tab:AddSection({
+	Name = "Universal Scripts"
+})
+
+Tab:AddButton({
+	Name = "Infinite Yeild",
+	Callback = function()
+      		print("button pressed")
+loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+  	end    
+})
+
+Tab:AddButton({
+	Name = "Bay",
+	Callback = function()
+      		print("button pressed")
+loadstring(game:HttpGet("https://rawscripts.net/raw/Universal-Script-FLY-GUI-V3-8031"))()
+  	end    
+})Tab:AddButton({
+	Name = "Bàn Phím Ảo"'
+	Callback = function()
+      		print("button pressed")
+loadstring(game:HttpGet("https://raw.githubusercontent.com/GGH52lan/GGH52lan/main/keyboard.txt"))()
+  	end
+})
+
+Tab:AddButton({
+	Name = "Làm Người Khác Văng Ra Xa Khi Đụng",
+	Callback = function()
+      		print("button pressed")
+loadstring(game:HttpGet("https://raw.githubusercontent.com/0Ben1/fe./main/Fling%20GUI"))()
+  	end    
+})
+
+--[[
+Name = <string> - The name of the button.
+Callback = <function> - The function of the button.
+]]
+
+--[[
+Name = <string> - The name of the button.
+Callback = <function> - The function of the button.
+]]
+
+
+
+local Tab = Window:MakeTab({
+	Name = "Nhân Vật",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Section = Tab:AddSection({
+	Name = "Scripts Cho Nhân Vật"
+})
+
+Tab:AddTextbox({
+	Name = "Tăng Tốc Độ Di Chuyển (mặc định là 16)",
+	Default = "16",
+	TextDisappear = true,
+	Callback = function(Value)
+		local number = tonumber(Value)
+		if number then
+			game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = number
+		end
+	end	  
+})
+
+Tab:AddTextbox({
+	Name = "Nhảy Cao (mặc định là 50)",
+	Default = "50",
+	TextDisappear = true,
+	Callback = function(Value)
+		local number = tonumber(Value)
+		if number then
+			game.Players.LocalPlayer.Character.Humanoid.JumpPower = number
+		end
+	end	  
+})
+
+Tab:AddTextbox({
+	Name = "FOV (mặc định là 70)",
+	Default = "70",
+	TextDisappear = true,
+	Callback = function(Value)
+		local number = tonumber(Value)
+		if number then
+			game.Workspace.CurrentCamera.FieldOfView = number
+		end
+	end	  
+})
+
+Tab:AddToggle({
+    Name = "Tăng Độ Sáng Cho Game",
+    Default = false,
+    Callback = function(Value)
+        if Value then
+            game:GetService("Lighting").Brightness = 15
+            game:GetService("Lighting").ClockTime = 12
+            game:GetService("Lighting").FogEnd = 1000
+            game:GetService("Lighting").GlobalShadows = true
+            game:GetService("Lighting").OutdoorAmbient = Color3.fromRGB(128, 128, 128)
+        else
+            game:GetService("Lighting").Brightness = 1
+            game:GetService("Lighting").ClockTime = 14
+            game:GetService("Lighting").FogEnd = 100000
+            game:GetService("Lighting").GlobalShadows = false
+            game:GetService("Lighting").OutdoorAmbient = Color3.fromRGB(127, 127, 127)
+        end
+    end
+})
+
+OrionLib:Init()
